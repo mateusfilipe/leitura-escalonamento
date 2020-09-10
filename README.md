@@ -1,2 +1,63 @@
-# Leitura de Escalonamento
-Leitura de um arquivo em txt e conversão de seus valores em médias segundo algoritmos de escalonamentos.
+# Leitura de Escalonamento🧗‍♂️
+<h2>Resumo</h2>
+Este projeto retrata uma leitura de um arquivo ".txt" com dados do escalonamento para o calcúlo das médias que irão para o arquivo de saída.
+
+<h2>Escalonamentos retratados</h2>
+<ul>
+  <li>FIFO (First in / First Out)</li>
+  <li>Prioridade</li>
+  <li>SRT (Shortest Time Remaining)</li>
+  <li>Round Robin, com quantum = 5</li>
+</ul>
+<h2>Arquivos Do Projeto</h2>
+<ul>
+  
+  <li>
+  main.cpp
+    <ul>
+      <li>Arquivo principal com todo a execução código, leitura, entre outras funções a serem implementadas.</li>
+    </ul>
+  </li>
+  <li>
+  teste.cpp
+    <ul>
+      <li>Arquivo para testes de implementação, foi nele onde testei inicialmente a remoção dos " "(espaços) na leitura.</li>
+    </ul>
+  </li>
+  <li>
+  testeX.txt
+    <ul>
+      <li>Todos os arquivos de texto são as entradas do código principal, com os dados necessários.</li>
+    </ul>
+  </li>
+</ul>
+<h2>Arquivos</h2>
+
+No arquivo de <b>entrada</b>, a primeira linha do arquivo representa seu número de linhas de comandos.
+Nas linhas de comando temos 3 valores inteiros, o primeiro P definindo a prioridade, 
+o segundo I definindo o instante de chegada do processo e o S que determina o tempo de serviso do processo.
+
+No arquivo de <b>saída</b> será necessário escrever o nome do escalonamento e junto a ele o resultado do cálculo 
+do tempo médio de espera e o tempo médio de resposta de cada um com 2 casas decimais em cada um deles.
+
+
+<h3>Entrada:</h3>
+
+3
+
+0 20 42
+
+2 3 33
+
+1 14 54
+<hr>
+<h3>Saída:</h3>
+
+FIFO 30.67 30.67
+
+PRIO 0.00 46.00
+
+SRT_ 26.67 26.67
+
+RRQ5 55.00 2.33
+

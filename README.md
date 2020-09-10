@@ -1,4 +1,6 @@
 # Leitura de Escalonamento🧗‍♂️
+<img width="22%" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Algoritmo_SRT.gif/220px-Algoritmo_SRT.gif">
+<h6>Exemplo de Escalonamento: <a href="https://pt.wikipedia.org/wiki/Shortest_remaining_time">SRT</a></h6> 
 <h2>Resumo</h2>
 Este projeto retrata uma leitura de um arquivo ".txt" com dados do escalonamento para o calcúlo das médias que irão para o arquivo de saída.
 

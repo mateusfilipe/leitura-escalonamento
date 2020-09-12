@@ -26,7 +26,6 @@ int main()
     int i; //Instante de chegada do processo
     int s; //Tempo de serviço do processo
 
-
     //Variáveis para leitura de arquivo:
     ifstream ler;
     ofstream saida;
@@ -53,14 +52,23 @@ int main()
     //Impressão de Teste dos valores lidos no arquivo
     for (index=0; index< vect.size(); index++){
         auxiliar = vect[index];
-        cout << auxiliar << endl;
+        //cout << auxiliar << endl;
     }
+    n = vect[0];
+    cout<<"Processos: "<<n<<endl;
+    //==================================================//
+    //Calculando o Tempo médio de Espera do escalonamento FIFO
+    float fifoSoma = 0; //Soma de tempo do FIFO
+    float fifoME = 0;  //Tempo médio de espera do FIFO
+    float fifoMR = 0; //Tempo médio de resposta do FIFO
+    for(int x = 0, y = 3 ; x < n ; x++, y+=3){
+      fifoSoma += vect[y]-vect[y-1];
+    }
+    fifoME = fifoSoma/n;
+    fifoMR = fifoME;
+    cout << fixed << setprecision(2);
+    cout<<"FIFO "<<fifoME<<" "<<fifoMR<<endl;
+    //==========================================================//
 
     ler.close();
 }
-
-/*cout<<"\nn: ";
-cout << fixed << showpoint;
-cout << setprecision(2);
-cout << float(n) << endl;
-*/

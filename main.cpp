@@ -38,6 +38,9 @@ void bubbleSortChegada(int arr[], int arr1[], int arr2[])
     }
 }
 void calcFifo(int vectChegada[], int vectDuracao[], int vectPrioridade[]);
+void calcPrio(int vectChegada[], int vectDuracao[], int vectPrioridade[]);
+void calcSRT_(int vectChegada[], int vectDuracao[], int vectPrioridade[]);
+void calcRRQ5(int vectChegada[], int vectDuracao[], int vectPrioridade[]);
 
 int main()
 {
@@ -82,22 +85,38 @@ int main()
       vectChegada[x] = vect[y];
       vectDuracao[x] = vect[y+1];
     }
+    //Ordenando os vetores pelo tempo de chegada e acompanhados de sua duração e prioridade
+    bubbleSortChegada(vectChegada, vectDuracao, vectPrioridade);
 
     //===========================================//
     //Função de cálculo do escalonamento FIFO
     calcFifo(vectChegada, vectDuracao, vectPrioridade);
     //===========================================//
 
+    //===========================================//
+    //Chamada da função de cálculo do escalonamento PRIORIDADE
+    calcPrio(vectChegada, vectDuracao, vectPrioridade);
+    //===========================================//
+
+    //===========================================//
+    //Chamada da função de cálculo do escalonamento PRIORIDADE
+    calcSRT_(vectChegada, vectDuracao, vectPrioridade);
+    //===========================================//
+
+    //===========================================//
+    //Chamada da função de cálculo do escalonamento PRIORIDADE
+    calcRRQ5(vectChegada, vectDuracao, vectPrioridade);
+    //===========================================//
+
     ler.close();
 }
+//=========================================================================//
+//Função de cálculo do escalonamento FIFO
 void calcFifo(int vectChegada[], int vectDuracao[], int vectPrioridade[]){
     ofstream saida;
     saida.open("saida.txt",fstream::app);
     float fifoME = 0;  //Tempo médio de espera do FIFO
     float fifoMR = 0; //Tempo médio de resposta do FIFO
-    //Ordenando o vetor pelo tempo de chegada
-    bubbleSortChegada(vectChegada, vectDuracao, vectPrioridade);
-
     float tempoEspera; //Tempo de espera total
     float tempoDuracao; //Tempo de duração total
     //Calculando o Tempo médio de Espera do escalonamento FIFO
@@ -119,3 +138,41 @@ void calcFifo(int vectChegada[], int vectDuracao[], int vectPrioridade[]){
     saida << fixed << setprecision(2);
     saida <<"FIFO "<<fifoME<<" "<<fifoMR<<endl;
 }
+//=========================================================================//
+//Função de cálculo do escalonamento PRIORIDADE
+void calcPrio(int vectChegada[], int vectDuracao[], int vectPrioridade[]){
+    ofstream saida;
+    saida.open("saida.txt",fstream::app);
+    float prioME = 0;  //Tempo médio de espera do FIFO
+    float prioMR = 0; //Tempo médio de resposta do FIFO
+
+
+    saida << fixed << setprecision(2);
+    saida <<"PRIO "<<prioME<<" "<<prioMR<<endl;
+}
+//=========================================================================//
+//Função de cálculo do escalonamento PRIORIDADE
+//=========================================================================//
+void calcSRT_(int vectChegada[], int vectDuracao[], int vectPrioridade[]){
+    ofstream saida;
+    saida.open("saida.txt",fstream::app);
+    float srt_ME = 0;  //Tempo médio de espera do FIFO
+    float srt_MR = 0; //Tempo médio de resposta do FIFO
+
+
+    saida << fixed << setprecision(2);
+    saida <<"SRT_ "<<srt_ME<<" "<<srt_MR<<endl;
+}
+//=========================================================================//
+//Função de cálculo do escalonamento PRIORIDADE
+void calcRRQ5(int vectChegada[], int vectDuracao[], int vectPrioridade[]){
+    ofstream saida;
+    saida.open("saida.txt",fstream::app);
+    float rrq5ME = 0;  //Tempo médio de espera do FIFO
+    float rrq5MR = 0; //Tempo médio de resposta do FIFO
+
+
+    saida << fixed << setprecision(2);
+    saida <<"RRQ5 "<<rrq5ME<<" "<<rrq5MR<<endl;
+}
+//=========================================================================//

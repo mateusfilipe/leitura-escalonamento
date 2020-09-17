@@ -112,6 +112,7 @@ int main()
 }
 //=========================================================================//
 //Função de cálculo do escalonamento FIFO
+//=========================================================================//
 void calcFifo(int vectChegada[], int vectDuracao[], int vectPrioridade[]){
     ofstream saida;
     saida.open("saida.txt",fstream::app);
@@ -140,6 +141,7 @@ void calcFifo(int vectChegada[], int vectDuracao[], int vectPrioridade[]){
 }
 //=========================================================================//
 //Função de cálculo do escalonamento PRIORIDADE
+//=========================================================================//
 void calcPrio(int vectChegada[], int vectDuracao[], int vectPrioridade[]){
     ofstream saida;
     saida.open("saida.txt",fstream::app);
@@ -165,6 +167,7 @@ void calcSRT_(int vectChegada[], int vectDuracao[], int vectPrioridade[]){
 }
 //=========================================================================//
 //Função de cálculo do escalonamento RRQ5
+//=========================================================================//
 void calcRRQ5(int vectChegada[], int vectDuracao[], int vectPrioridade[]){
     ofstream saida;
     saida.open("saida.txt",fstream::app);

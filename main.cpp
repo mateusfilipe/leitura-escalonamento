@@ -99,12 +99,12 @@ int main()
     //===========================================//
 
     //===========================================//
-    //Chamada da função de cálculo do escalonamento PRIORIDADE
+    //Chamada da função de cálculo do escalonamento SRT_
     calcSRT_(vectChegada, vectDuracao, vectPrioridade);
     //===========================================//
 
     //===========================================//
-    //Chamada da função de cálculo do escalonamento PRIORIDADE
+    //Chamada da função de cálculo do escalonamento RRQ5
     calcRRQ5(vectChegada, vectDuracao, vectPrioridade);
     //===========================================//
 
@@ -151,7 +151,7 @@ void calcPrio(int vectChegada[], int vectDuracao[], int vectPrioridade[]){
     saida <<"PRIO "<<prioME<<" "<<prioMR<<endl;
 }
 //=========================================================================//
-//Função de cálculo do escalonamento PRIORIDADE
+//Função de cálculo do escalonamento SRT_
 //=========================================================================//
 void calcSRT_(int vectChegada[], int vectDuracao[], int vectPrioridade[]){
     ofstream saida;
@@ -164,7 +164,7 @@ void calcSRT_(int vectChegada[], int vectDuracao[], int vectPrioridade[]){
     saida <<"SRT_ "<<srt_ME<<" "<<srt_MR<<endl;
 }
 //=========================================================================//
-//Função de cálculo do escalonamento PRIORIDADE
+//Função de cálculo do escalonamento RRQ5
 void calcRRQ5(int vectChegada[], int vectDuracao[], int vectPrioridade[]){
     ofstream saida;
     saida.open("saida.txt",fstream::app);

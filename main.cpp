@@ -46,7 +46,7 @@ int main()
 {
     //Variáveis para leitura de arquivo:
     ifstream ler;
-    ler.open("teste2.txt");
+    ler.open("teste1.txt");
     vector<int> vect; //Vector a salvar
 
     // REGISTRANDO AS LINHAS E REMOVENDO O ESPAÇO//
@@ -141,6 +141,8 @@ void calcPrio(int vectChegada[], int vectDuracao[], int vectPrioridade[]){
     float prioME = 0;  //Tempo médio de espera do PRIO
     float prioMR = 0; //Tempo médio de resposta do PRIO
     float tempoEspera = 0;
+    float difChegadaAux = 0;
+    float difChegada = 0;
     //Ordenando os vetores pelo tempo de chegada e acompanhados de sua duração e prioridade
     bubbleSortChegada(vectPrioridade, vectChegada, vectDuracao);
     //Calculando o Tempo médio de Espera do escalonamento Prioridade
@@ -149,9 +151,39 @@ void calcPrio(int vectChegada[], int vectDuracao[], int vectPrioridade[]){
       for(int j = 0 ; j < i; j++)
       {
         tempoEspera += vectDuracao[j];
+        difChegadaAux += vectChegada[j]-vectChegada[i];
+        if(difChegadaAux < 0){
+          difChegada += difChegadaAux;
+        }
       }
     }
+    tempoEspera += difChegada;
+
+    float duracao = 0;
+    float somaPrioridade = 0;
+    float somaResposta = 0;
+
+    //Calculando o Tempo médio de Resposta do escalonamento Prioridade
+    for (int i = 0,j = 1; i < n; i++,j++)
+    {
+        if (vectPrioridade[j] > vectPrioridade[i] && vectChegada[j] != vectChegada[i])
+        {
+            somaPrioridade += 0;
+        }
+        if (vectPrioridade[j] >= vectPrioridade[i] && vectChegada[j] == vectChegada[i])
+        {
+            somaPrioridade += vectDuracao[i];
+            somaResposta += somaPrioridade;
+        }
+        if (vectPrioridade[j] == vectPrioridade[i] && vectChegada[j] > vectChegada[i])
+        {
+            somaPrioridade += (vectDuracao[j] + vectChegada[j])-vectChegada[i];
+            somaResposta += somaPrioridade;
+        }
+    }
+
     prioME = tempoEspera/n;
+    prioMR = somaResposta/n;
     saida << fixed << setprecision(2);
     saida <<"PRIO "<<prioME<<" "<<prioMR<<endl;
 }

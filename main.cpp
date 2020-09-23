@@ -11,21 +11,20 @@
 using namespace std;
 
 /*
-int 'n' : linhas
-
-int 'p' : 0 <= p <= 10
-int 'i' : 0 <= i <= 2^(n-1)
-int 's' : 1 <= s <= 2^(n-2)
+  Mateus Filipe
+  BSI-2018
 */
 int n;
 
+//Função de troca de valor dos vetores para ordenação
 void swap(int *xp, int *yp)
 {
     int temp = *xp;
     *xp = *yp;
     *yp = temp;
 }
-void bubbleSortChegada(int arr[], int arr1[], int arr2[])
+//Função de ordenação, ordena-se pelo primeiro vetor passado, os outros o acompanham
+void bubbleSort(int arr[], int arr1[], int arr2[])
 {
     for (int i = 0; i < n-1; i++){
       for (int j = 0; j < n-i-1; j++){
@@ -112,7 +111,7 @@ void calcFifo(int vectChegada[], int vectDuracao[], int vectPrioridade[]){
     float tempoEspera; //Tempo de espera total
     float tempoDuracao; //Tempo de duração total
     //Ordenando os vetores pelo tempo de chegada e acompanhados de sua duração e prioridade
-    bubbleSortChegada(vectChegada, vectDuracao, vectPrioridade);
+    bubbleSort(vectChegada, vectDuracao, vectPrioridade);
     //Calculando o Tempo médio de Espera do escalonamento FIFO
     for (int i = 0; i < n; i++)
     {
@@ -144,7 +143,7 @@ void calcPrio(int vectChegada[], int vectDuracao[], int vectPrioridade[]){
     float difChegadaAux = 0;
     float difChegada = 0;
     //Ordenando os vetores pelo tempo de chegada e acompanhados de sua duração e prioridade
-    bubbleSortChegada(vectPrioridade, vectChegada, vectDuracao);
+    bubbleSort(vectPrioridade, vectChegada, vectDuracao);
     //Calculando o Tempo médio de Espera do escalonamento Prioridade
     for (int i = 1; i < n; i++)
     {
@@ -195,8 +194,20 @@ void calcSRT_(int vectChegada[], int vectDuracao[], int vectPrioridade[]){
     saida.open("saida.txt",fstream::app);
     float srt_ME = 0;  //Tempo médio de espera do SRT
     float srt_MR = 0; //Tempo médio de resposta do SRT
-
-
+    /*bubbleSort(vectChegada, vectPrioridade, vectDuracao);
+    float tempoEspera = 0;
+    for(int i = 0 ; i < n ; i++){
+      for(int j = 1 ; j < i ; j++){
+        if(vectDuracao[i]-vectChegada[j] < vectDuracao[j]){
+          if(vectDuracao[i]-vectChegada[j+1] < vectDuracao[j+1]){
+            tempoEspera += vectDuracao[i];
+            cout<<vectDuracao[j]<<endl;
+          }
+        }
+      }
+    }
+    tempoEspera = vectChegada[0] + vectDuracao[0] - vectChegada[2];
+    cout<<tempoEspera;*/
     saida << fixed << setprecision(2);
     saida <<"SRT_ "<<srt_ME<<" "<<srt_MR<<endl;
 }
@@ -208,8 +219,57 @@ void calcRRQ5(int vectChegada[], int vectDuracao[], int vectPrioridade[]){
     saida.open("saida.txt",fstream::app);
     float rrq5ME = 0;  //Tempo médio de espera do RRQ5
     float rrq5MR = 0; //Tempo médio de resposta do RRQ5
-
-
+    bubbleSort(vectChegada, vectPrioridade, vectDuracao);
+    //=========================================================================//
+    //Cálculo do tempo médio de Espera
+    int i, total = 0, x, counter = 0, time_quantum;
+    int wait_time = 0, turnaround_time = 0;
+    int *temp = new int[n];
+    float average_turnaround_time;
+    x = n;
+    for(i = 0; i < n; i++)
+    {
+        temp[i] = vectDuracao[i];
+    }
+    time_quantum = 5;
+    for(total = 0, i = 0; x != 0;)
+    {
+          if(temp[i] <= time_quantum && temp[i] > 0)
+          {
+                total = total + temp[i];
+                temp[i] = 0;
+                counter = 1;
+          }
+          else if(temp[i] > 0)
+          {
+                temp[i] = temp[i] - time_quantum;
+                total = total + time_quantum;
+          }
+          if(temp[i] == 0 && counter == 1)
+          {
+                x--;
+                wait_time = wait_time + total - vectChegada[i] - vectDuracao[i];
+                turnaround_time = turnaround_time + total - vectChegada[i];
+                counter = 0;
+          }
+          if(i == n - 1)
+          {
+                i = 0;
+          }
+          else if(vectChegada[i + 1] <= total)
+          {
+                i++;
+          }
+          else
+          {
+                i = 0;
+          }
+    }
+    rrq5ME = wait_time * 1.0 / n;
+    average_turnaround_time = turnaround_time * 1.0 / n;
+    printf("\n\nAverage Waiting Time:\t%f", rrq5ME);
+    printf("\nAvg Turnaround Time:\t%f\n", average_turnaround_time);
+    //=========================================================================//
     saida << fixed << setprecision(2);
     saida <<"RRQ5 "<<rrq5ME<<" "<<rrq5MR<<endl;
 }

@@ -222,34 +222,33 @@ void calcRRQ5(int vectChegada[], int vectDuracao[], int vectPrioridade[]){
     bubbleSort(vectChegada, vectPrioridade, vectDuracao);
     //=========================================================================//
     //Cálculo do tempo médio de Espera
-    int i, total = 0, x, counter = 0, time_quantum;
-    int wait_time = 0, turnaround_time = 0;
-    int *temp = new int[n];
-    float average_turnaround_time;
+    int i;
+    float total = 0, x, counter = 0;
+    float wait_time = 0;
+    int *copyDuracao = new int[n];
+    int b = 0;
     x = n;
     for(i = 0; i < n; i++)
     {
-        temp[i] = vectDuracao[i];
+        copyDuracao[i] = vectDuracao[i];
     }
-    time_quantum = 5;
     for(total = 0, i = 0; x != 0;)
     {
-          if(temp[i] <= time_quantum && temp[i] > 0)
+          if(copyDuracao[i] <= 5 && copyDuracao[i] > 0)
           {
-                total = total + temp[i];
-                temp[i] = 0;
+                total = total + copyDuracao[i];
+                copyDuracao[i] = 0;
                 counter = 1;
           }
-          else if(temp[i] > 0)
+          else if(copyDuracao[i] > 0)
           {
-                temp[i] = temp[i] - time_quantum;
-                total = total + time_quantum;
+                copyDuracao[i] = copyDuracao[i] - 5;
+                total = total + 5;
           }
-          if(temp[i] == 0 && counter == 1)
+          if(copyDuracao[i] == 0 && counter == 1)
           {
                 x--;
                 wait_time = wait_time + total - vectChegada[i] - vectDuracao[i];
-                turnaround_time = turnaround_time + total - vectChegada[i];
                 counter = 0;
           }
           if(i == n - 1)
@@ -265,11 +264,28 @@ void calcRRQ5(int vectChegada[], int vectDuracao[], int vectPrioridade[]){
                 i = 0;
           }
     }
-    rrq5ME = wait_time * 1.0 / n;
-    average_turnaround_time = turnaround_time * 1.0 / n;
-    printf("\n\nAverage Waiting Time:\t%f", rrq5ME);
-    printf("\nAvg Turnaround Time:\t%f\n", average_turnaround_time);
+    rrq5ME = wait_time / n;
     //=========================================================================//
+    //Cálculo do tempo médio de Resposta
+    float diferencaResposta = 0;
+    float somaResposta = 0;
+    int primeiraChegada = vectChegada[0];
+   for(int i = 0, j = 1; i < n; i++,j++)
+    {
+       if (j != n) {
+           while (vectChegada[j] >= primeiraChegada) {
+               primeiraChegada += 5;
+           }
+           if (i > 0) {
+               diferencaResposta = (primeiraChegada + 5) - vectChegada[j];
+           }
+           else {
+               diferencaResposta = primeiraChegada - vectChegada[j];
+           }
+           somaResposta += diferencaResposta;
+       }
+    }
+    rrq5MR = somaResposta/n;
     saida << fixed << setprecision(2);
     saida <<"RRQ5 "<<rrq5ME<<" "<<rrq5MR<<endl;
 }

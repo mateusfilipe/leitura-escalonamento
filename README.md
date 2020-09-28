@@ -3,7 +3,6 @@
 <h6>Exemplo de Escalonamento: <a href="https://pt.wikipedia.org/wiki/Shortest_remaining_time">SRT</a></h6> 
 <h2>Resumo</h2>
 Este projeto retrata uma leitura de um arquivo ".txt" com dados do escalonamento para o calcúlo das médias que irão para o arquivo de saída.
-
 <h2>Escalonamentos retratados</h2>
 <ul>
   <li>FIFO (First in / First Out)</li>
@@ -42,24 +41,11 @@ o segundo I definindo o instante de chegada do processo e o S que determina o te
 No arquivo de <b>saída</b> será necessário escrever o nome do escalonamento e junto a ele o resultado do cálculo 
 do tempo médio de espera e o tempo médio de resposta de cada um com 2 casas decimais em cada um deles.
 
+<h3>Exemplo:</h3>
 
-<h3>Entrada:</h3>
-
-3
-
-0 20 42
-
-2 3 33
-
-1 14 54
-<hr>
-<h3>Saída:</h3>
-
-FIFO 30.67 30.67
-
-PRIO 0.00 46.00
-
-SRT_ 26.67 26.67
-
-RRQ5 55.00 2.33
-
+| Entrada |       Saída      |
+|---------|------------------|
+| 3       | FIFO 30.67 30.67 |
+| 0 20 42 | PRIO 46.00 0.00  |
+| 2 3 33  | SRT_ 26.67 26.67 |
+| 1 14 54 | RRQ5 52.00 4.00  |

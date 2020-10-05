@@ -1,4 +1,5 @@
 # Leitura de Escalonamento🧗‍♂️
+<img width="21%" src="https://upload.wikimedia.org/wikipedia/commons/3/33/Fila_processos.jpg">
 <img width="22%" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Algoritmo_SRT.gif/220px-Algoritmo_SRT.gif">
 <h6>Exemplo de Escalonamento: <a href="https://pt.wikipedia.org/wiki/Shortest_remaining_time">SRT</a></h6> 
 <h2>Resumo</h2>

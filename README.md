@@ -48,4 +48,4 @@ do tempo médio de espera e o tempo médio de resposta de cada um com 2 casas de
 | 3       | FIFO 30.67 30.67 |
 | 0 20 42 | PRIO 46.00 0.00  |
 | 2 3 33  | SRT_ 26.67 26.67 |
-| 1 14 54 | RRQ5 52.00 4.00  |
+| 1 14 54 | RRQ5 53.34 4.00  |

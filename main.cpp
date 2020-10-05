@@ -11,9 +11,12 @@
 using namespace std;
 
 /*
-  Mateus Filipe
-  BSI-2018
+  Bruno Victor Vasconcelos
+			&&
+  Mateus Filipe de Lima Souza
+		BSI-2018
 */
+
 int n;
 ofstream saida;
 
@@ -24,6 +27,7 @@ void swap(int* xp, int* yp)
 	*xp = *yp;
 	*yp = temp;
 }
+
 //Função de ordenação, ordena-se pelo primeiro vetor passado, os outros o acompanham
 void bubbleSort(int arr[], int arr1[], int arr2[])
 {
@@ -53,7 +57,7 @@ int main()
 	saida.open("saida.txt", fstream::app);
 	vector<int> vect; //Vector a salvar
 
-	// REGISTRANDO AS LINHAS E REMOVENDO O ESPAÇO//
+	//REGISTRANDO AS LINHAS E REMOVENDO O ESPAÇO//
 	string linhas; //Linhas do arquivo
 	int index;
 	while (!ler.eof())
@@ -67,14 +71,7 @@ int main()
 				ss.ignore();        //ignorando os espaços do arquivo
 		}
 	}
-	//Impressão de Teste dos valores lidos no arquivo
-	/*
-	for (index = 0; index < vect.size(); index++)
-	{
-		cout << vect[index] << endl;
-	}
-	cout << "Processos: " << n << endl;
-	*/
+
 	n = vect[0];
 
 	//Vetores para cada coluno do arquivo
@@ -88,34 +85,25 @@ int main()
 		vectDuracao[x] = vect[y + 1];
 	}
 
-	//===========================================//
 	//Função de cálculo do escalonamento FIFO
 	calcFifo(vectChegada, vectDuracao, vectPrioridade);
-	//===========================================//
 
-	//===========================================//
 	//Chamada da função de cálculo do escalonamento PRIORIDADE
 	calcPrio(vectChegada, vectDuracao, vectPrioridade);
-	//===========================================//
 
-	//===========================================//
 	//Chamada da função de cálculo do escalonamento SRT_
 	calcSRT_(vectChegada, vectDuracao, vectPrioridade);
-	//===========================================//
 
-	//===========================================//
 	//Chamada da função de cálculo do escalonamento RRQ5
 	calcRRQ5(vectChegada, vectDuracao, vectPrioridade);
-	//===========================================//
 
 	saida.close();
 	ler.close();
 }
-//=========================================================================//
+
 //Função de cálculo do escalonamento FIFO
-//=========================================================================//
 void calcFifo(int vectChegada[], int vectDuracao[], int vectPrioridade[]) {
-	float fifoME = 0;  //Tempo médio de espera do FIFO
+	float fifoME = 0; //Tempo médio de espera do FIFO
 	float fifoMR = 0; //Tempo médio de resposta do FIFO
 	float tempoEspera = 0; //Tempo de espera total
 	float tempoDuracao = 0; //Tempo de duração total
@@ -140,11 +128,10 @@ void calcFifo(int vectChegada[], int vectDuracao[], int vectPrioridade[]) {
 	saida << fixed << setprecision(2);
 	saida << "FIFO " << fifoME << " " << fifoMR << endl;
 }
-//=========================================================================//
+
 //Função de cálculo do escalonamento PRIORIDADE
-//=========================================================================//
 void calcPrio(int vectChegada[], int vectDuracao[], int vectPrioridade[]) {
-	float prioME = 0;  //Tempo médio de espera do PRIO
+	float prioME = 0; //Tempo médio de espera do PRIO
 	float prioMR = 0; //Tempo médio de resposta do PRIO
 	float tempoEspera = 0;
 	float auxDuracao = 0;
@@ -161,7 +148,7 @@ void calcPrio(int vectChegada[], int vectDuracao[], int vectPrioridade[]) {
 		auxDuracao -= vectDuracao[i]; // Subtraindo a duração após "rodar" um dos processos
 		if ((vectChegada[j] - vectChegada[i]) < 0 and j != -1)
 		{
-			difChegada += vectChegada[i] - vectChegada[j]; 
+			difChegada += vectChegada[i] - vectChegada[j];
 		}
 		tempoEspera += auxDuracao;
 	}
@@ -170,7 +157,6 @@ void calcPrio(int vectChegada[], int vectDuracao[], int vectPrioridade[]) {
 	float duracao = 0;
 	float somaPrioridade = 0;
 	float somaResposta = 0;
-	//=========================================================================//
 	//Calculando o Tempo médio de Resposta do escalonamento Prioridade
 	for (int i = 0, j = 1; i < n; i++, j++)
 	{
@@ -195,9 +181,8 @@ void calcPrio(int vectChegada[], int vectDuracao[], int vectPrioridade[]) {
 	saida << fixed << setprecision(2);
 	saida << "PRIO " << prioME << " " << prioMR << endl;
 }
-//=========================================================================//
+
 //Função de cálculo do escalonamento SRT_
-//=========================================================================//
 void calcSRT_(int vectChegada[], int vectDuracao[], int vectPrioridade[]) {
 	float srt_ME = 0;  //Tempo médio de espera do SRT
 	float srt_MR = 0; //Tempo médio de resposta do SRT
@@ -205,9 +190,10 @@ void calcSRT_(int vectChegada[], int vectDuracao[], int vectPrioridade[]) {
 
 	//Calculando o Tempo médio de Espera do escalonamento SRT_
 	int* auxDuracao = new int[n]; //Vetor auxiliar para tempo de Espera;
-	float tempoFinal; 
+	float tempoFinal;
 	int menorIndex;
 	float restante = 0, time, esperaTotal = 0;
+	float resp = 0, aux = 0;
 	for (int i = 0; i < n; i++)
 	{
 		auxDuracao[i] = vectDuracao[i];
@@ -218,33 +204,34 @@ void calcSRT_(int vectChegada[], int vectDuracao[], int vectPrioridade[]) {
 		menorIndex = 9;
 		for (int i = 0; i < n; i++)
 		{
-			if (vectChegada[i] <= time && auxDuracao[i] < auxDuracao[menorIndex] && auxDuracao[i] > 0) 
+			if (vectChegada[i] <= time && auxDuracao[i] < auxDuracao[menorIndex] && auxDuracao[i] > 0)
 			{
 				menorIndex = i;
 			}
 		}
 		auxDuracao[menorIndex]--;
-		if (auxDuracao[menorIndex] == 0) 
+		if (auxDuracao[menorIndex] == 0)
 		{
 			restante++;
 			tempoFinal = time + 1;
 			esperaTotal += tempoFinal - vectDuracao[menorIndex] - vectChegada[menorIndex];
+			resp += esperaTotal - aux;
+			aux = esperaTotal;
 		}
 	}
-	//=========================================================================//
 	//Calculando o Tempo médio de Resposta do escalonamento SRT_
+
 	srt_ME = esperaTotal / n;
+	srt_MR = resp / n;
 	saida << fixed << setprecision(2);
 	saida << "SRT_ " << srt_ME << " " << srt_MR << endl;
 }
-//=========================================================================//
+
 //Função de cálculo do escalonamento RRQ5
-//=========================================================================//
 void calcRRQ5(int vectChegada[], int vectDuracao[], int vectPrioridade[]) {
 	float rrq5ME = 0;  //Tempo médio de espera do RRQ5
 	float rrq5MR = 0; //Tempo médio de resposta do RRQ5
 	bubbleSort(vectChegada, vectPrioridade, vectDuracao);
-	//=========================================================================//
 	//Cálculo do tempo médio de Espera
 	int i;
 	float total = 0, x, counter = 0;
@@ -275,7 +262,6 @@ void calcRRQ5(int vectChegada[], int vectDuracao[], int vectPrioridade[]) {
 			x--;
 			wait_time += total - vectChegada[i] - vectDuracao[i];
 			counter = 0;
-			cout << wait_time << " " << total << endl;
 		}
 		if (i == n - 1)
 		{
@@ -291,24 +277,23 @@ void calcRRQ5(int vectChegada[], int vectDuracao[], int vectPrioridade[]) {
 		}
 	}
 	rrq5ME = wait_time / n;
-	//=========================================================================//
 	//Cálculo do tempo médio de Resposta
 	float diferencaResposta = 0;
 	float somaResposta = 0;
 	float primeiraChegada = vectChegada[0];
-	for (int i = 0, j = 1; i < n; i++, j++) 
+	for (int i = 0, j = 1; i < n; i++, j++)
 	{
-		if (j != n) 
+		if (j != n)
 		{
-			while (vectChegada[j] >= primeiraChegada) 
+			while (vectChegada[j] >= primeiraChegada)
 			{
 				primeiraChegada += 5;
 			}
-			if (i > 0) 
+			if (i > 0)
 			{
 				diferencaResposta = (primeiraChegada + 5) - vectChegada[j];
 			}
-			else 
+			else
 			{
 				diferencaResposta = primeiraChegada - vectChegada[j];
 			}
@@ -320,4 +305,3 @@ void calcRRQ5(int vectChegada[], int vectDuracao[], int vectPrioridade[]) {
 	saida << fixed << setprecision(2);
 	saida << "RRQ5 " << rrq5ME << " " << rrq5MR << endl;
 }
-//=========================================================================//

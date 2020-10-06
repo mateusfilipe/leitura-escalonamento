@@ -193,8 +193,8 @@ void calcSRT_(int vectChegada[], int vectDuracao[], int vectPrioridade[]) {
 	float tempoFinal;
 	int menorIndex;
 	float restante = 0, time, esperaTotal = 0;
-	float resp = 0, aux = 0, resp1 = 0;
-	int* aux1 = new int[n];
+	float respDiferente = 0, aux = 0, respIgual = 0;
+	
 	bool bo = true;
 
 	for (int i = 0; i < n; i++)
@@ -219,15 +219,20 @@ void calcSRT_(int vectChegada[], int vectDuracao[], int vectPrioridade[]) {
 			tempoFinal = time + 1;
 			esperaTotal += tempoFinal - vectDuracao[menorIndex] - vectChegada[menorIndex];
 			if (bo) {
-				resp += esperaTotal - aux; // Novy
-				resp1 = esperaTotal - aux; // Diferente
+				respDiferente += esperaTotal - aux; // Diferentes
+				respIgual = esperaTotal - aux; // Iguais
 				bo = false;
 			}
-			if (resp == esperaTotal) {
+			if (respDiferente == esperaTotal) {
 				bo = true;
 				aux = esperaTotal;
 			}
 		}
+	}
+	
+	float totalTempo = vectChegada[0];
+	for (int i = 0; i < n; i++) {
+		totalTempo += vectDuracao[i];
 	}
 
 	//Calculando o Tempo médio de Resposta do escalonamento SRT_
@@ -245,15 +250,15 @@ void calcSRT_(int vectChegada[], int vectDuracao[], int vectPrioridade[]) {
 					cont++;
 				}
 			}
-			if (aux2 == 132)
+			if (aux2 == totalTempo)
 				complete = true;
 		}
 	}
 	if (cont > 0) {
-		srt_MR = resp1 / n;
+		srt_MR = respIgual / n;
 	}
 	else {
-		srt_MR = resp / n;
+		srt_MR = respDiferente / n;
 	}
 
 	srt_ME = esperaTotal / n;

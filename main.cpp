@@ -71,7 +71,7 @@ int main()
 				ss.ignore();        //ignorando os espaços do arquivo
 		}
 	}
-
+	
 	n = vect[0];
 
 	//Vetores para cada coluno do arquivo
@@ -148,11 +148,11 @@ void calcPrio(int vectChegada[], int vectDuracao[], int vectPrioridade[]) {
 		auxDuracao -= vectDuracao[i]; // Subtraindo a duração após "rodar" um dos processos
 		if ((vectChegada[j] - vectChegada[i]) < 0 and j != -1)
 		{
-			difChegada += vectChegada[i] - vectChegada[j];
+			difChegada += vectChegada[i] - vectChegada[j]; // Somando a diferença para subtrair da espera total
 		}
-		tempoEspera += auxDuracao;
+		tempoEspera += auxDuracao; // Somando a espera total
 	}
-	tempoEspera -= difChegada;
+	tempoEspera -= difChegada; // Tirando a diferença da espera
 
 	float duracao = 0;
 	float somaPrioridade = 0;
@@ -193,7 +193,10 @@ void calcSRT_(int vectChegada[], int vectDuracao[], int vectPrioridade[]) {
 	float tempoFinal;
 	int menorIndex;
 	float restante = 0, time, esperaTotal = 0;
-	float resp = 0, aux = 0;
+	float resp = 0, aux = 0, resp1 = 0;
+	int* aux1 = new int[n];
+	bool bo = true;
+
 	for (int i = 0; i < n; i++)
 	{
 		auxDuracao[i] = vectDuracao[i];
@@ -215,14 +218,45 @@ void calcSRT_(int vectChegada[], int vectDuracao[], int vectPrioridade[]) {
 			restante++;
 			tempoFinal = time + 1;
 			esperaTotal += tempoFinal - vectDuracao[menorIndex] - vectChegada[menorIndex];
-			resp += esperaTotal - aux;
-			aux = esperaTotal;
+			if (bo) {
+				resp += esperaTotal - aux; // Novy
+				resp1 = esperaTotal - aux; // Diferente
+				bo = false;
+			}
+			if (resp == esperaTotal) {
+				bo = true;
+				aux = esperaTotal;
+			}
 		}
 	}
+
 	//Calculando o Tempo médio de Resposta do escalonamento SRT_
+	bool complete = false;
+	int cont = 0;
+	int aux2 = 0;
+	for (int i = 0, j = 1; i < n; i++, j++)
+	{
+		while (complete == false)
+		{
+			aux2 += 1;
+			if (aux2 == vectChegada[j]) {
+				if (vectDuracao[i] - aux2 > vectDuracao[j])
+				{
+					cont++;
+				}
+			}
+			if (aux2 == 132)
+				complete = true;
+		}
+	}
+	if (cont > 0) {
+		srt_MR = resp1 / n;
+	}
+	else {
+		srt_MR = resp / n;
+	}
 
 	srt_ME = esperaTotal / n;
-	srt_MR = resp / n;
 	saida << fixed << setprecision(2);
 	saida << "SRT_ " << srt_ME << " " << srt_MR << endl;
 }
@@ -277,6 +311,7 @@ void calcRRQ5(int vectChegada[], int vectDuracao[], int vectPrioridade[]) {
 		}
 	}
 	rrq5ME = wait_time / n;
+
 	//Cálculo do tempo médio de Resposta
 	float diferencaResposta = 0;
 	float somaResposta = 0;

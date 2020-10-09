@@ -51,6 +51,7 @@ void calcRRQ5(int vectChegada[], int vectDuracao[], int vectPrioridade[]);
 
 int main()
 {
+	cout << "Processando..." << endl;
 	//Variáveis para leitura de arquivo:
 	ifstream ler;
 	ler.open("teste1.txt");
@@ -84,7 +85,6 @@ int main()
 		vectChegada[x] = vect[y];
 		vectDuracao[x] = vect[y + 1];
 	}
-
 	//Função de cálculo do escalonamento FIFO
 	calcFifo(vectChegada, vectDuracao, vectPrioridade);
 
@@ -99,6 +99,8 @@ int main()
 
 	saida.close();
 	ler.close();
+	
+	cout << "Arquivo: 'saida.txt' gerado com sucesso." << endl;
 }
 
 //Função de cálculo do escalonamento FIFO
@@ -143,14 +145,17 @@ void calcPrio(int vectChegada[], int vectDuracao[], int vectPrioridade[]) {
 	{
 		auxDuracao += vectDuracao[i]; //Auxiliar do somatório de todas as Durações
 	}
-	for (int i = (n - 1), j = (n - 2); i >= 0; i--, j--)
-	{
+	int i = n - 1;
+	int j = n - 2;
+	while (i >= 0) {
 		auxDuracao -= vectDuracao[i]; // Subtraindo a duração após "rodar" um dos processos
 		if ((vectChegada[j] - vectChegada[i]) < 0 and j != -1)
 		{
 			difChegada += vectChegada[i] - vectChegada[j]; // Somando a diferença para subtrair da espera total
 		}
 		tempoEspera += auxDuracao; // Somando a espera total
+		i--;
+		j--;
 	}
 	tempoEspera -= difChegada; // Tirando a diferença da espera
 

@@ -50,3 +50,6 @@ do tempo médio de espera e o tempo médio de resposta de cada um com 2 casas de
 | 0 20 42 | PRIO 46.00 0.00  |
 | 2 3 33  | SRT_ 26.67 26.67 |
 | 1 14 54 | RRQ5 53.34 4.00  |
+
+
+<h6>Atualmente estou tentando refazer este projeto em C# se quiser dar uma olhada: <a href="https://github.com/mateusfilipe/Learning/tree/master/learning-cSharp/leitura-escalonamento-CSharp">Acesse aqui</a></h6>
